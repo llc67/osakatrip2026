@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2026大阪 · 律綺</title>
+    <style>
+        :root { --primary: #e67e22; --bg: #fdfaf6; --text: #2c3e50; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: var(--text); padding-bottom: 50px; }
+        h1 { text-align: center; color: #d35400; font-size: 1.4rem; margin-bottom: 20px; }
+        .day-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--primary); }
+        .day-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .day-title { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
+        .day-desc { font-size: 0.85rem; color: #7f8c8d; margin-top: 2px; }
+        .add-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .nav-list { display: grid; gap: 8px; }
+        .nav-item { display: flex; align-items: center; gap: 8px; }
+        .nav-link { flex: 1; background: #fff; border: 1px solid #eee; text-decoration: none; color: #34495e; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; font-weight: 500; }
+        .del-btn { color: #e74c3c; border: none; background: none; font-size: 1.2rem; padding: 5px; }
+        .todo-section { background: white; border-radius: 15px; padding: 15px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .input-group { display: flex; gap: 8px; margin-bottom: 15px; }
+        input[type="text"] { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; }
+        .main-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; }
+        .todo-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f9f9f9; }
+        .todo-item input { width: 20px; height: 20px; margin-right: 12px; accent-color: var(--primary); }
+        .todo-item.completed span { text-decoration: line-through; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+<h1>🇯🇵 2026 大阪旅遊手冊</h1>
+<div id="itinerary"></div>
+<div class="todo-section">
+    <div class="day-title" style="margin-bottom:12px">📋 購物與美食待辦</div>
+    <div class="input-group">
+        <input type="text" id="todo-input" placeholder="新增項目 (如：買護色洗髮精)">
+        <button class="main-btn" onclick="addTodo()">新增</button>
+    </div>
+    <div id="todo-list"></div>
+</div>
+<script>
+    const defaultData = [
+        { d: "2/20 (五)", t: "抵達、梅田飯店、心齋橋", l: ["梅田站", "心齋橋"] },
+        { d: "2/21 (六)", t: "INTEX 領物資", l: ["INTEX Osaka", "しんぱち食堂"] },
+        { d: "2/22 (日)", t: "馬拉松應援 (爸媽會合)", l: ["麥×雞拉麵", "南一園燒肉"] },
+        { d: "2/23 (一)", t: "天橋立一日遊 (自助)", l: ["天橋立車站", "Dorajyu"] },
+        { d: "2/24 (二)", t: "木津市場、八阪神社", l: ["木津市場", "難波八阪神社", "勝尾寺 (備案)"] }
+    ];
+    let itin = JSON.parse(localStorage.getItem('osaka_itin')) || defaultData;
+    let todos = JSON.parse(localStorage.getItem('osaka_todos')) || [];
+    function render() {
+        localStorage.setItem('osaka_itin', JSON.stringify(itin));
+        localStorage.setItem('osaka_todos', JSON.stringify(todos));
+        document.getElementById('itinerary').innerHTML = itin.map((item, dIdx) => `
+            <div class="day-card">
+                <div class="day-header">
+                    <div><div class="day-title">${item.d}</div><div class="day-desc">${item.t}</div></div>
+                    <button class="add-btn" onclick="addLoc(${dIdx})">+</button>
+                </div>
+                <div class="nav-list">${item.l.map((loc, lIdx) => `
+                    <div class="nav-item">
+                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}" target="_blank" class="nav-link">📍 ${loc}</a>
+                        <button class="del-btn" onclick="delLoc(${dIdx},${lIdx})">×</button>
+                    </div>`).join('')}
+                </div>
+            </div>`).join('');
+        document.getElementById('todo-list').innerHTML = todos.map((t, i) => `
+            <div class="todo-item ${t.c ? 'completed' : ''}">
+                <input type="checkbox" ${t.c ? 'checked' : ''} onclick="toggleTodo(${i})">
+                <span style="flex:1">${t.txt}</span>
+                <button class="del-btn" onclick="delTodo(${i})">×</button>
+            </div>`).join('');
+    }
+    window.addLoc = (i) => { const n = prompt("輸入新地點："); if(n) { itin[i].l.push(n); render(); } };
+    window.delLoc = (di, li) => { if(confirm("刪除此地點？")) { itin[di].l.splice(li,1); render(); } };
+    window.addTodo = () => { const i = document.getElementById('todo-input'); if(i.value) { todos.push({txt: i.value, c: false}); i.value=''; render(); } };
+    window.toggleTodo = (i) => { todos[i].c = !todos[i].c; render(); };
+    window.delTodo = (i) => { todos.splice(i,1); render(); };
+    render();
+</script>
+</body>
+</html>
