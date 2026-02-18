@@ -8,7 +8,6 @@
         :root { --primary: #3b71ca; --bg: #f8f9fa; --text: #202124; --nav-blue: #1a73e8; }
         body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-bottom: 30px; }
         
-        /* Tab 導覽列 */
         .tabs { display: flex; background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-size: 1rem; font-weight: bold; color: #5f6368; cursor: pointer; }
         .tab-btn.active { color: var(--nav-blue); border-bottom: 3px solid var(--nav-blue); }
@@ -16,31 +15,25 @@
         .content-section { display: none; padding: 15px; }
         .content-section.active { display: block; }
 
-        /* 行程卡片樣式 */
-        .day-header { display: flex; align-items: center; gap: 10px; margin: 10px 0 20px 0; }
+        .day-header { display: flex; align-items: center; justify-content: space-between; margin: 15px 0; }
+        .day-info { display: flex; align-items: center; gap: 10px; }
         .day-badge { background: var(--primary); color: white; padding: 4px 12px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; }
-        .day-date { font-size: 1.15rem; font-weight: bold; color: #3c4043; }
+        .day-date { font-size: 1.15rem; font-weight: bold; color: #3c4043; outline: none; }
 
-        .event-card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #dadce0; border-left: 5px solid var(--primary); }
-        .event-time { color: var(--nav-blue); font-size: 1.25rem; font-weight: bold; margin-bottom: 8px; }
-        .event-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #202124; }
-        .event-detail { font-size: 1rem; color: #5f6368; list-style: none; padding: 0; margin: 0; }
-        .event-detail li { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; }
-        .event-detail li::before { content: "•"; color: #dadce0; }
+        .event-card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #dadce0; border-left: 5px solid var(--primary); position: relative; }
+        .card-del { position: absolute; top: 10px; right: 10px; color: #ccc; cursor: pointer; border: none; background: none; font-size: 1.2rem; }
+        
+        .event-time { color: var(--nav-blue); font-size: 1.25rem; font-weight: bold; margin-bottom: 8px; outline: none; display: inline-block; min-width: 50px; }
+        .event-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #202124; outline: none; display: block; }
+        .event-detail { font-size: 1rem; color: #5f6368; outline: none; white-space: pre-wrap; line-height: 1.6; min-height: 20px; }
 
-        .nav-link { display: inline-flex; align-items: center; gap: 5px; background: #f1f3f4; color: var(--nav-blue); text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-top: 12px; border: 1px solid #dadce0; }
+        .add-card-btn { background: white; border: 1px dashed var(--primary); color: var(--primary); border-radius: 8px; width: 100%; padding: 12px; margin-bottom: 25px; font-weight: bold; cursor: pointer; font-size: 1rem; }
 
-        /* 資訊頁樣式 */
         .info-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #dadce0; }
         .info-title { font-weight: bold; color: var(--nav-blue); margin-bottom: 12px; font-size: 1.1rem; }
         .calc-box { display: flex; align-items: center; gap: 10px; background: #f8f9fa; padding: 15px; border-radius: 8px; }
         .calc-input { flex: 1; padding: 10px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1.1rem; width: 100px; }
-        .editable-note { background: #fffdf4; padding: 15px; border-radius: 8px; border: 1px dashed #f1e05a; min-height: 50px; font-size: 0.95rem; white-space: pre-wrap; line-height: 1.6; }
-
-        /* 待辦清單 */
         .todo-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f3f4; }
-        .todo-item input { width: 20px; height: 20px; accent-color: var(--nav-blue); }
-        .del-btn { margin-left: auto; color: #d93025; border: none; background: none; font-size: 1.3rem; }
     </style>
 </head>
 <body>
@@ -51,75 +44,7 @@
 </div>
 
 <div id="daily" class="content-section active">
-    <div class="day-header"><span class="day-badge">Day 1</span><span class="day-date">2/20 (五) 抵達 ・ 心齋橋</span></div>
-    <div class="event-card">
-        <div class="event-time">11:55</div>
-        <div class="event-title">抵達關西機場 (KIX)</div>
-        <ul class="event-detail">
-            <li>航班：長榮 BR132 (08:20 起飛)</li>
-            <li>任務：入境、領取行李、**劃位 JR (Haruka/後續車票)**</li>
-            <li>交通：搭乘 HARUKA JR 前往大阪 (梅田)</li>
-        </ul>
-    </div>
-    <div class="event-card">
-        <div class="event-time">15:00</div>
-        <div class="event-title">飯店 Check-in / 放行李</div>
-        <ul class="event-detail"><li>地點：Apartment hotel 11 umeda</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=Apartment+hotel+11+umeda" target="_blank" class="nav-link">📍 導航到飯店</a>
-    </div>
-    <div class="event-card">
-        <div class="event-time">16:30</div>
-        <div class="event-title">心齋橋 ・ 道頓堀</div>
-        <ul class="event-detail"><li>行程：商店街逛逛、固力果人拍照</li><li>晚餐：大阪燒或章魚燒</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=心齋橋" target="_blank" class="nav-link">📍 導航到心齋橋</a>
-    </div>
-
-    <div class="day-header"><span class="day-badge">Day 2</span><span class="day-date">2/21 (六) 領物資 ・ 梅田</span></div>
-    <div class="event-card">
-        <div class="event-title">INTEX Osaka 報到</div>
-        <ul class="event-detail"><li>任務：領取馬拉松物資</li><li>晚餐：梅田附近用餐 (如：しんぱち食堂)</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=INTEX+Osaka" target="_blank" class="nav-link">📍 導航到 INTEX</a>
-    </div>
-
-    <div class="day-header"><span class="day-badge">Day 3</span><span class="day-date">2/22 (日) 馬拉松加油日</span></div>
-    <div class="event-card">
-        <div class="event-time">早上</div>
-        <div class="event-title">馬拉松加油團</div>
-        <ul class="event-detail"><li>任務：跟媽媽去加油，中午與爸爸會合</li><li>下午：飯店休息，梅田附近逛逛</li></ul>
-    </div>
-
-    <div class="day-header"><span class="day-badge">Day 4</span><span class="day-date">2/23 (一) 天橋立一日遊</span></div>
-    <div class="event-card">
-        <div class="event-title">天橋立自助行</div>
-        <ul class="event-detail"><li>交通：JR 丹後鐵道一日遊 (不跟團)</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=天橋立" target="_blank" class="nav-link">📍 導航到天橋立</a>
-    </div>
-
-    <div class="day-header"><span class="day-badge">Day 5</span><span class="day-date">2/24 (二) 市場與神社</span></div>
-    <div class="event-card">
-        <div class="event-time">早上</div>
-        <div class="event-title">木津市場</div>
-        <ul class="event-detail"><li>推薦：鮮魚 魚豐 (鰻魚飯)</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=木津市場" target="_blank" class="nav-link">📍 導航到市場</a>
-    </div>
-    <div class="event-card">
-        <div class="event-title">難波八阪神社</div>
-        <ul class="event-detail"><li>行程：獅子頭殿拍照、求勝運</li><li>備案：勝尾寺</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=難波八阪神社" target="_blank" class="nav-link">📍 導航到神社</a>
-    </div>
-
-    <div class="day-header"><span class="day-badge">Day 6</span><span class="day-date">2/25 (三) 最後採買 ・ 回程</span></div>
-    <div class="event-card">
-        <div class="event-time">上午</div>
-        <div class="event-title">臨空城 Outlet</div>
-        <ul class="event-detail"><li>行程：最後補貨採買</li></ul>
-        <a href="https://www.google.com/maps/search/?api=1&query=Rinku+Premium+Outlets" target="_blank" class="nav-link">📍 導航到 Outlet</a>
-    </div>
-    <div class="event-card">
-        <div class="event-time">下午</div>
-        <div class="event-title">關西機場 (KIX)</div>
-        <ul class="event-detail"><li>任務：搭機回程</li></ul>
-    </div>
+    <div id="itinerary-list"></div>
 </div>
 
 <div id="info" class="content-section">
@@ -131,17 +56,10 @@
             <div id="twdRes" style="font-size: 1.2rem; font-weight: bold; color: #188038;">台幣 $0</div>
         </div>
     </div>
-
-    <div class="info-card">
-        <div class="info-title">🏨 住宿資訊 (可點擊編輯)</div>
-        <div class="editable-note" contenteditable="true" id="hotel-note" onblur="saveAll()">飯店：Apartment hotel 11 umeda
-地址：5-11 Toyosaki, Kita-ku, Osaka</div>
-    </div>
-
     <div class="info-card">
         <div class="info-title">📋 購物與美食待辦</div>
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-            <input type="text" id="todo-in" style="flex:1; padding:12px; border:1px solid #dadce0; border-radius:10px;" placeholder="例如：買護色洗髮精...">
+            <input type="text" id="todo-in" style="flex:1; padding:12px; border:1px solid #dadce0; border-radius:10px;" placeholder="買護色洗髮精...">
             <button onclick="addT()" style="background:var(--nav-blue); color:white; border:none; border-radius:10px; padding:0 20px; font-weight:bold;">新增</button>
         </div>
         <div id="t-list"></div>
@@ -149,38 +67,95 @@
 </div>
 
 <script>
-    let todos = JSON.parse(localStorage.getItem('osaka_t_v5')) || [];
+    const defaultData = [
+        { badge: "Day 1", date: "2/20 (五) 抵達 ・ 心齋橋", events: [
+            { time: "11:55", title: "抵達關西機場 (KIX)", detail: "• 航班：長榮 BR132 (08:20 起飛)\n• 任務：入境、領行李、劃位 JR\n• 交通：搭乘 HARUKA JR 前往大阪" },
+            { time: "15:00", title: "飯店 Check-in", detail: "• 地點：Apartment hotel 11 umeda" },
+            { time: "16:30", title: "心齋橋 ・ 道頓堀", detail: "• 行程：商店街逛逛、固力果人拍照\n• 晚餐：大阪燒或章魚燒" }
+        ]},
+        { badge: "Day 2", date: "2/21 (六) 領物資 ・ 梅田", events: [
+            { time: "全天", title: "INTEX Osaka 報到", detail: "• 任務：領取馬拉松物資\n• 晚餐：梅田附近用餐 (しんぱち食堂)" }
+        ]},
+        { badge: "Day 3", date: "2/22 (日) 馬拉松加油日", events: [
+            { time: "早上", title: "馬拉松加油團", detail: "• 任務：跟媽媽去加油，中午會合\n• 下午：飯店休息，梅田逛逛" }
+        ]},
+        { badge: "Day 4", date: "2/23 (一) 天橋立一日遊", events: [
+            { time: "全天", title: "天橋立自助行", detail: "• 交通：JR 丹後鐵道一日遊 (不跟團)" }
+        ]},
+        { badge: "Day 5", date: "2/24 (二) 市場與神社", events: [
+            { time: "早上", title: "木津市場", detail: "• 推薦：鮮魚 魚豐 (鰻魚飯)" },
+            { time: "中午", title: "難波八阪神社", detail: "• 行程：獅子頭殿拍照、求勝運\n• 備案：勝尾寺" }
+        ]},
+        { badge: "Day 6", date: "2/25 (三) 最後採買 ・ 回程", events: [
+            { time: "上午", title: "臨空城 Outlet", detail: "• 行程：最後補貨採買" },
+            { time: "18:10", title: "飛機起飛 ✈️", detail: "• 航班：長榮 BR131\n• 預計：20:25 抵達台灣" }
+        ]}
+    ];
+
+    let itinData = JSON.parse(localStorage.getItem('osaka_v7_itin')) || defaultData;
+    let todos = JSON.parse(localStorage.getItem('osaka_v7_todos')) || [];
+
     function openTab(tId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
+
+    function save() {
+        localStorage.setItem('osaka_v7_itin', JSON.stringify(itinData));
+        localStorage.setItem('osaka_v7_todos', JSON.stringify(todos));
+    }
+
+    function renderItin() {
+        document.getElementById('itinerary-list').innerHTML = itinData.map((day, dIdx) => `
+            <div class="day-header">
+                <div class="day-info">
+                    <span class="day-badge">${day.badge}</span>
+                    <span class="day-date" contenteditable="true" onblur="itinData[${dIdx}].date=this.innerText;save()">${day.date}</span>
+                </div>
+            </div>
+            ${day.events.map((ev, eIdx) => `
+                <div class="event-card">
+                    <button class="card-del" onclick="removeEvent(${dIdx}, ${eIdx})">×</button>
+                    <div class="event-time" contenteditable="true" onblur="itinData[${dIdx}].events[${eIdx}].time=this.innerText;save()">${ev.time}</div>
+                    <div class="event-title" contenteditable="true" onblur="itinData[${dIdx}].events[${eIdx}].title=this.innerText;save()">${ev.title}</div>
+                    <div class="event-detail" contenteditable="true" onblur="itinData[${dIdx}].events[${eIdx}].detail=this.innerText;save()">${ev.detail}</div>
+                </div>
+            `).join('')}
+            <button class="add-card-btn" onclick="addEvent(${dIdx})">+ 新增行程卡片</button>
+        `).join('');
+    }
+
+    window.addEvent = (dIdx) => {
+        itinData[dIdx].events.push({ time: "時間", title: "點擊編輯行程", detail: "• 詳細任務" });
+        save(); renderItin();
+    };
+
+    window.removeEvent = (dIdx, eIdx) => {
+        if(confirm("確定刪除此行程？")) { itinData[dIdx].events.splice(eIdx, 1); save(); renderItin(); }
+    };
+
     function convert() {
         const j = document.getElementById('jpyInput').value;
         document.getElementById('twdRes').innerText = "台幣 $" + Math.round(j * 0.21);
     }
+
     function addT() {
         const i = document.getElementById('todo-in');
-        if(i.value){ todos.push({txt:i.value, d:false}); i.value=''; saveAll(); renderT(); }
+        if(i.value){ todos.push({txt:i.value, d:false}); i.value=''; save(); renderT(); }
     }
-    function saveAll() {
-        localStorage.setItem('osaka_t_v5', JSON.stringify(todos));
-        localStorage.setItem('osaka_h_v5', document.getElementById('hotel-note').innerText);
-    }
+
     function renderT() {
         document.getElementById('t-list').innerHTML = todos.map((t, i) => `
             <div class="todo-item">
-                <input type="checkbox" ${t.d?'checked':''} onclick="todos[${i}].d=!todos[${i}].d;saveAll();renderT();">
+                <input type="checkbox" ${t.d?'checked':''} onclick="todos[${i}].d=!todos[${i}].d;save();renderT();">
                 <span style="${t.d?'text-decoration:line-through;color:#9aa0a6':''}">${t.txt}</span>
-                <button class="del-btn" onclick="todos.splice(${i},1);saveAll();renderT();">×</button>
+                <button onclick="todos.splice(${i},1);save();renderT();" style="margin-left:auto;border:none;background:none;color:#d93025;font-size:1.2rem;">×</button>
             </div>`).join('');
     }
-    window.onload = () => {
-        const h = localStorage.getItem('osaka_h_v5');
-        if(h) document.getElementById('hotel-note').innerText = h;
-        renderT();
-    };
+
+    window.onload = () => { renderItin(); renderT(); };
 </script>
 </body>
 </html>
