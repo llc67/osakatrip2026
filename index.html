@@ -5,36 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026大阪 · 律綺</title>
     <style>
-        :root { --primary: #e67e22; --bg: #fdfaf6; --text: #2c3e50; --tab-bg: #eee; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 0; color: var(--text); }
+        :root { --primary: #3b71ca; --bg: #f8f9fa; --text: #202124; --nav-blue: #1a73e8; }
+        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; color: var(--text); padding-bottom: 30px; }
         
         /* Tab 導覽列 */
-        .tabs { display: flex; background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-size: 1rem; font-weight: bold; color: #7f8c8d; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        .tabs { display: flex; background: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-size: 1rem; font-weight: bold; color: #5f6368; cursor: pointer; }
+        .tab-btn.active { color: var(--nav-blue); border-bottom: 3px solid var(--nav-blue); }
         
-        .content-section { display: none; padding: 15px; padding-bottom: 50px; }
+        .content-section { display: none; padding: 15px; }
         .content-section.active { display: block; }
 
-        /* 卡片與內容樣式 */
-        .flight-info { background: #d35400; color: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center; }
-        .day-card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-left: 6px solid var(--primary); }
-        .day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .day-title { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
-        .editable-note { font-size: 0.9rem; color: #7f8c8d; margin-bottom: 12px; padding: 8px; background: #fef9f3; border-radius: 8px; min-height: 24px; line-height: 1.4; }
-        
-        .nav-list { display: grid; gap: 8px; }
-        .nav-item { display: flex; align-items: center; gap: 8px; }
-        .nav-link { flex: 1; background: #fff; border: 1px solid #eee; text-decoration: none; color: #34495e; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; }
-        .add-btn { background: var(--primary); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-size: 1.2rem; }
-        .del-btn { color: #e74c3c; border: none; background: none; font-size: 1.2rem; cursor: pointer; }
+        /* 行程卡片樣式 */
+        .day-header { display: flex; align-items: center; gap: 10px; margin: 10px 0 20px 0; }
+        .day-badge { background: var(--primary); color: white; padding: 4px 12px; border-radius: 6px; font-weight: bold; font-size: 1.1rem; }
+        .day-date { font-size: 1.15rem; font-weight: bold; color: #3c4043; }
 
-        /* 資訊頁面樣式 */
-        .info-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .info-title { font-weight: bold; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-        .calc-input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        .todo-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f9f9f9; }
-        .todo-item input { margin-right: 10px; width: 18px; height: 18px; accent-color: var(--primary); }
+        .event-card { background: white; border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #dadce0; border-left: 5px solid var(--primary); }
+        .event-time { color: var(--nav-blue); font-size: 1.25rem; font-weight: bold; margin-bottom: 8px; }
+        .event-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; color: #202124; }
+        .event-detail { font-size: 1rem; color: #5f6368; list-style: none; padding: 0; margin: 0; }
+        .event-detail li { margin-bottom: 6px; display: flex; align-items: flex-start; gap: 8px; }
+        .event-detail li::before { content: "•"; color: #dadce0; }
+
+        .nav-link { display: inline-flex; align-items: center; gap: 5px; background: #f1f3f4; color: var(--nav-blue); text-decoration: none; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-top: 12px; border: 1px solid #dadce0; }
+
+        /* 資訊頁樣式 */
+        .info-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #dadce0; }
+        .info-title { font-weight: bold; color: var(--nav-blue); margin-bottom: 12px; font-size: 1.1rem; }
+        .calc-box { display: flex; align-items: center; gap: 10px; background: #f8f9fa; padding: 15px; border-radius: 8px; }
+        .calc-input { flex: 1; padding: 10px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1.1rem; width: 100px; }
+        .editable-note { background: #fffdf4; padding: 15px; border-radius: 8px; border: 1px dashed #f1e05a; min-height: 50px; font-size: 0.95rem; white-space: pre-wrap; line-height: 1.6; }
+
+        /* 待辦清單 */
+        .todo-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f3f4; }
+        .todo-item input { width: 20px; height: 20px; accent-color: var(--nav-blue); }
+        .del-btn { margin-left: auto; color: #d93025; border: none; background: none; font-size: 1.3rem; }
     </style>
 </head>
 <body>
@@ -45,108 +51,136 @@
 </div>
 
 <div id="daily" class="content-section active">
-    <div class="flight-info">
-        <div style="font-weight: bold;">✈️ 航班資訊</div>
-        <div style="font-size: 0.85rem; margin-top: 5px;">2/20 去程：[請編輯備註填寫]</div>
-        <div style="font-size: 0.85rem;">2/25 回程：[請編輯備註填寫]</div>
+    <div class="day-header"><span class="day-badge">Day 1</span><span class="day-date">2/20 (五) 抵達 ・ 心齋橋</span></div>
+    <div class="event-card">
+        <div class="event-time">11:55</div>
+        <div class="event-title">抵達關西機場 (KIX)</div>
+        <ul class="event-detail">
+            <li>航班：長榮 BR132 (08:20 起飛)</li>
+            <li>任務：入境、領取行李、**劃位 JR (Haruka/後續車票)**</li>
+            <li>交通：搭乘 HARUKA JR 前往大阪 (梅田)</li>
+        </ul>
     </div>
-    <div id="itinerary"></div>
+    <div class="event-card">
+        <div class="event-time">15:00</div>
+        <div class="event-title">飯店 Check-in / 放行李</div>
+        <ul class="event-detail"><li>地點：Apartment hotel 11 umeda</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=Apartment+hotel+11+umeda" target="_blank" class="nav-link">📍 導航到飯店</a>
+    </div>
+    <div class="event-card">
+        <div class="event-time">16:30</div>
+        <div class="event-title">心齋橋 ・ 道頓堀</div>
+        <ul class="event-detail"><li>行程：商店街逛逛、固力果人拍照</li><li>晚餐：大阪燒或章魚燒</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=心齋橋" target="_blank" class="nav-link">📍 導航到心齋橋</a>
+    </div>
+
+    <div class="day-header"><span class="day-badge">Day 2</span><span class="day-date">2/21 (六) 領物資 ・ 梅田</span></div>
+    <div class="event-card">
+        <div class="event-title">INTEX Osaka 報到</div>
+        <ul class="event-detail"><li>任務：領取馬拉松物資</li><li>晚餐：梅田附近用餐 (如：しんぱち食堂)</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=INTEX+Osaka" target="_blank" class="nav-link">📍 導航到 INTEX</a>
+    </div>
+
+    <div class="day-header"><span class="day-badge">Day 3</span><span class="day-date">2/22 (日) 馬拉松加油日</span></div>
+    <div class="event-card">
+        <div class="event-time">早上</div>
+        <div class="event-title">馬拉松加油團</div>
+        <ul class="event-detail"><li>任務：跟媽媽去加油，中午與爸爸會合</li><li>下午：飯店休息，梅田附近逛逛</li></ul>
+    </div>
+
+    <div class="day-header"><span class="day-badge">Day 4</span><span class="day-date">2/23 (一) 天橋立一日遊</span></div>
+    <div class="event-card">
+        <div class="event-title">天橋立自助行</div>
+        <ul class="event-detail"><li>交通：JR 丹後鐵道一日遊 (不跟團)</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=天橋立" target="_blank" class="nav-link">📍 導航到天橋立</a>
+    </div>
+
+    <div class="day-header"><span class="day-badge">Day 5</span><span class="day-date">2/24 (二) 市場與神社</span></div>
+    <div class="event-card">
+        <div class="event-time">早上</div>
+        <div class="event-title">木津市場</div>
+        <ul class="event-detail"><li>推薦：鮮魚 魚豐 (鰻魚飯)</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=木津市場" target="_blank" class="nav-link">📍 導航到市場</a>
+    </div>
+    <div class="event-card">
+        <div class="event-title">難波八阪神社</div>
+        <ul class="event-detail"><li>行程：獅子頭殿拍照、求勝運</li><li>備案：勝尾寺</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=難波八阪神社" target="_blank" class="nav-link">📍 導航到神社</a>
+    </div>
+
+    <div class="day-header"><span class="day-badge">Day 6</span><span class="day-date">2/25 (三) 最後採買 ・ 回程</span></div>
+    <div class="event-card">
+        <div class="event-time">上午</div>
+        <div class="event-title">臨空城 Outlet</div>
+        <ul class="event-detail"><li>行程：最後補貨採買</li></ul>
+        <a href="https://www.google.com/maps/search/?api=1&query=Rinku+Premium+Outlets" target="_blank" class="nav-link">📍 導航到 Outlet</a>
+    </div>
+    <div class="event-card">
+        <div class="event-time">下午</div>
+        <div class="event-title">關西機場 (KIX)</div>
+        <ul class="event-detail"><li>任務：搭機回程</li></ul>
+    </div>
 </div>
 
 <div id="info" class="content-section">
     <div class="info-card">
-        <div class="info-title">💴 匯率換算 (日幣 ➡️ 台幣)</div>
-        <input type="number" id="jpyInput" class="calc-input" placeholder="輸入日幣金額" oninput="convertCurrency()">
-        <div id="twdResult" style="margin-top: 10px; font-weight: bold; color: #27ae60;">約台幣：$0</div>
-        <div style="font-size: 0.75rem; color: #999; margin-top: 5px;">* 以 0.21 匯率估算，可於代碼中修改</div>
+        <div class="info-title">💴 匯率換算 (JPY ➡️ TWD)</div>
+        <div class="calc-box">
+            <input type="number" id="jpyInput" class="calc-input" placeholder="日幣" oninput="convert()">
+            <span style="font-weight:bold">➡️</span>
+            <div id="twdRes" style="font-size: 1.2rem; font-weight: bold; color: #188038;">台幣 $0</div>
+        </div>
     </div>
 
     <div class="info-card">
-        <div class="info-title">🏨 住宿資訊</div>
-        <div class="editable-note" contenteditable="true" onblur="saveInfo('hotel', this.innerText)" id="hotel-info">
-            飯店名稱：<br>地址：<br>電話：
-        </div>
+        <div class="info-title">🏨 住宿資訊 (可點擊編輯)</div>
+        <div class="editable-note" contenteditable="true" id="hotel-note" onblur="saveAll()">飯店：Apartment hotel 11 umeda
+地址：5-11 Toyosaki, Kita-ku, Osaka</div>
     </div>
 
     <div class="info-card">
         <div class="info-title">📋 購物與美食待辦</div>
-        <div style="display: flex; gap: 8px; margin-bottom: 10px;">
-            <input type="text" id="todo-input" class="calc-input" placeholder="新增項目...">
-            <button class="main-btn" onclick="addTodo()" style="background:var(--primary); color:white; border:none; border-radius:8px; padding:0 15px;">新增</button>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <input type="text" id="todo-in" style="flex:1; padding:12px; border:1px solid #dadce0; border-radius:10px;" placeholder="例如：買護色洗髮精...">
+            <button onclick="addT()" style="background:var(--nav-blue); color:white; border:none; border-radius:10px; padding:0 20px; font-weight:bold;">新增</button>
         </div>
-        <div id="todo-list"></div>
+        <div id="t-list"></div>
     </div>
 </div>
 
 <script>
-    const defaultData = [
-        { d: "2/20 (五)", note: "抵達、梅田飯店、心齋橋", l: ["梅田站", "心齋橋"] },
-        { d: "2/21 (六)", note: "INTEX 領物資", l: ["INTEX Osaka", "しんぱち食堂"] },
-        { d: "2/22 (日)", note: "馬拉松應援 (與爸媽會合)", l: ["麥×雞拉麵", "南一園燒肉"] },
-        { d: "2/23 (一)", note: "天橋立一日遊 (自助)", l: ["天橋立車站", "Dorajyu"] },
-        { d: "2/24 (二)", note: "木津市場、鮮魚 魚豐、八阪神社", l: ["木津市場", "鮮魚 魚豐", "難波八阪神社", "勝尾寺 (備案)"] },
-        { d: "2/25 (三)", note: "最後採買、搭機回程", l: ["臨空城 Outlet", "關西機場"] }
-    ];
-
-    let itin = JSON.parse(localStorage.getItem('osaka_itin')) || defaultData;
-    let todos = JSON.parse(localStorage.getItem('osaka_todos')) || [];
-    let infoData = JSON.parse(localStorage.getItem('osaka_info')) || { hotel: "飯店名稱：\n地址：\n電話：" };
-
-    function openTab(tabId) {
+    let todos = JSON.parse(localStorage.getItem('osaka_t_v5')) || [];
+    function openTab(tId) {
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
+        document.getElementById(tId).classList.add('active');
         event.currentTarget.classList.add('active');
     }
-
-    function save() {
-        localStorage.setItem('osaka_itin', JSON.stringify(itin));
-        localStorage.setItem('osaka_todos', JSON.stringify(todos));
-        localStorage.setItem('osaka_info', JSON.stringify(infoData));
+    function convert() {
+        const j = document.getElementById('jpyInput').value;
+        document.getElementById('twdRes').innerText = "台幣 $" + Math.round(j * 0.21);
     }
-
-    function convertCurrency() {
-        const jpy = document.getElementById('jpyInput').value;
-        const twd = Math.round(jpy * 0.21); // 這裡可以修改匯率
-        document.getElementById('twdResult').innerText = `約台幣：$${twd}`;
+    function addT() {
+        const i = document.getElementById('todo-in');
+        if(i.value){ todos.push({txt:i.value, d:false}); i.value=''; saveAll(); renderT(); }
     }
-
-    function saveInfo(key, val) { infoData[key] = val; save(); }
-
-    function render() {
-        document.getElementById('itinerary').innerHTML = itin.map((item, dIdx) => `
-            <div class="day-card">
-                <div class="day-header">
-                    <div class="day-title">${item.d}</div>
-                    <button class="add-btn" onclick="addLoc(${dIdx})">+</button>
-                </div>
-                <div class="editable-note" contenteditable="true" onblur="updateNote(${dIdx}, this.innerText)">${item.note}</div>
-                <div class="nav-list">${item.l.map((loc, lIdx) => `
-                    <div class="nav-item">
-                        <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}" target="_blank" class="nav-link">📍 ${loc}</a>
-                        <button class="del-btn" onclick="delLoc(${dIdx},${lIdx})">×</button>
-                    </div>`).join('')}
-                </div>
-            </div>`).join('');
-
-        document.getElementById('todo-list').innerHTML = todos.map((t, i) => `
+    function saveAll() {
+        localStorage.setItem('osaka_t_v5', JSON.stringify(todos));
+        localStorage.setItem('osaka_h_v5', document.getElementById('hotel-note').innerText);
+    }
+    function renderT() {
+        document.getElementById('t-list').innerHTML = todos.map((t, i) => `
             <div class="todo-item">
-                <input type="checkbox" ${t.c ? 'checked' : ''} onclick="toggleTodo(${i})">
-                <span style="flex:1; ${t.c ? 'text-decoration:line-through; color:#bdc3c7;' : ''}">${t.txt}</span>
-                <button class="del-btn" onclick="delTodo(${i})">×</button>
+                <input type="checkbox" ${t.d?'checked':''} onclick="todos[${i}].d=!todos[${i}].d;saveAll();renderT();">
+                <span style="${t.d?'text-decoration:line-through;color:#9aa0a6':''}">${t.txt}</span>
+                <button class="del-btn" onclick="todos.splice(${i},1);saveAll();renderT();">×</button>
             </div>`).join('');
-        
-        document.getElementById('hotel-info').innerText = infoData.hotel;
     }
-
-    window.updateNote = (i, txt) => { itin[i].note = txt; save(); };
-    window.addLoc = (i) => { const n = prompt("輸入新地點："); if(n){ itin[i].l.push(n); save(); render(); } };
-    window.delLoc = (di, li) => { if(confirm("刪除？")){ itin[di].l.splice(li,1); save(); render(); } };
-    window.addTodo = () => { const i = document.getElementById('todo-input'); if(i.value){ todos.push({txt:i.value, c:false}); i.value=''; save(); render(); } };
-    window.toggleTodo = (i) => { todos[i].c = !todos[i].c; save(); render(); };
-    window.delTodo = (i) => { todos.splice(i,1); save(); render(); };
-
-    render();
+    window.onload = () => {
+        const h = localStorage.getItem('osaka_h_v5');
+        if(h) document.getElementById('hotel-note').innerText = h;
+        renderT();
+    };
 </script>
 </body>
 </html>
